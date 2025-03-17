@@ -1,0 +1,46 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Временная почта - kou7744.github.io</title>
+    <style>
+        body { font-family: Arial, sans-serif; text-align: center; padding: 20px; }
+        .container { max-width: 600px; margin: auto; padding: 20px; border: 1px solid #ddd; border-radius: 10px; }
+        input { width: 80%; padding: 10px; margin: 10px 0; }
+        button { padding: 10px 20px; cursor: pointer; }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>Временная почта - kou7744.github.io</h1>
+        <p>Нажмите кнопку ниже, чтобы сгенерировать временный email:</p>
+        <button onclick="generateEmail()">Создать email</button>
+        <p id="email"></p>
+        <h2>Входящие сообщения</h2>
+        <div id="messages">Здесь будут отображаться письма...</div>
+    </div>
+
+    <script>
+        function generateEmail() {
+            let randomString = Math.random().toString(36).substring(2, 10);
+            let email = randomString + "@kou7744.github.io";
+            document.getElementById("email").innerText = email;
+        }
+
+        function fetchMessages() {
+            fetch("https://api.example.com/messages") // Заменить на реальный API
+                .then(response => response.json())
+                .then(data => {
+                    let messagesHTML = data.map(msg => `<p><strong>${msg.from}:</strong> ${msg.text}</p>`).join("");
+                    document.getElementById("messages").innerHTML = messagesHTML;
+                })
+                .catch(error => {
+                    document.getElementById("messages").innerHTML = "Ошибка загрузки сообщений";
+                });
+        }
+
+        setInterval(fetchMessages, 5000);
+    </script>
+</body>
+</html>
